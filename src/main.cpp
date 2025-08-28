@@ -1,6 +1,7 @@
 #include "load.hpp"
 #include "block_averaging.hpp"
 #include "thread_pool.hpp"
+#include "quantize.hpp"
 
 int main() {
     std::vector<std::string> imagesPath = {"assets/apple.jpg"};
@@ -51,13 +52,23 @@ int main() {
     }
 
     int blockSize = 16;
-    for(const auto& img : loadedImages) {
+
+    for (const auto &img : loadedImages) {
+        if (img.empty()) {
+            std::cerr << "Failed to load image!\n";
+            return -1;
+        }
+
         try {
             cv::Mat pixelated = block(img, blockSize);
+            cv::Mat quantization = quantize(pixelated, 16);
+
             cv::imshow("Pixelated Image", pixelated);
-            cv::waitKey(0);
+
+            int key = cv::waitKey(0);  
+            if (key == 27) cv::destroyAllWindows();  
         }
-        catch (const std::exception& e) {
+        catch (const std::exception &e) {
             std::cerr << e.what() << '\n';
             return -1;
         }
