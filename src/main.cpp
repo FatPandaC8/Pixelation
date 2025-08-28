@@ -5,7 +5,7 @@
 #include "dithering.hpp"
 
 int main() {
-    std::vector<std::string> imagesPath = {"assets/apple.jpg"};
+    std::vector<std::string> imagesPath = {"assets/apple.jpg", "assets/banana.jpg"};
     std::vector<cv::Mat> loadedImages; //shared vector to store loaded images
 
     std::cout << "Choose loading mode:\n";
@@ -44,8 +44,6 @@ int main() {
                 loadAndPushImage(path, loadedImages);
             }); 
         }
-
-        
     }
     else {
         std::cerr << "Invalid choice\n";
