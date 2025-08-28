@@ -2,8 +2,8 @@
 
 cv::Mat quantize(const cv::Mat &image, int K, int max_iters) {
     //Prepare the data
-    cv::Mat data = image.reshape(1, image.rows * image.cols); //squeeze the 3 color into 1 dimension
-    data.convertTo(data, CV_32F);
+    cv::Mat data = image.reshape(3, image.rows * image.cols); //squeeze the 3 color into 1 dimension
+    data.convertTo(data, CV_32F, 1.0 / 255.0);
     /*
     CV_8U: 8 bit/pixel - a pixel can have values 0-255 
     CV_32F: float - pixel can have any value between 0-1.0 -> need to be converted into 8 bit to save
@@ -43,8 +43,8 @@ cv::Mat quantize(const cv::Mat &image, int K, int max_iters) {
                 }
             }
 
-            if (labels[i] != clusterID) {
-                labels[i] = clusterID;
+            if (labels[id] != clusterID) {
+                labels[id] = clusterID;
                 changed = true;
             }
         }
@@ -75,6 +75,6 @@ cv::Mat quantize(const cv::Mat &image, int K, int max_iters) {
     }
 
     cv::Mat quantized = data.reshape(3, image.rows);
-    quantized.convertTo(quantized, CV_8U);
+    quantized.convertTo(quantized, CV_8U, 255.0);
     return quantized;
 }

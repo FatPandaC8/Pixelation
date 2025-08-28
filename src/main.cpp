@@ -2,6 +2,7 @@
 #include "block_averaging.hpp"
 #include "thread_pool.hpp"
 #include "quantize.hpp"
+#include "dithering.hpp"
 
 int main() {
     std::vector<std::string> imagesPath = {"assets/apple.jpg"};
@@ -62,8 +63,9 @@ int main() {
         try {
             cv::Mat pixelated = block(img, blockSize);
             cv::Mat quantization = quantize(pixelated, 16);
+            dither(quantization, 4);
 
-            cv::imshow("Pixelated Image", pixelated);
+            cv::imshow("Quantized + Dithered Image", quantization);
 
             int key = cv::waitKey(0);  
             if (key == 27) cv::destroyAllWindows();  
