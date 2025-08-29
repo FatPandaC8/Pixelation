@@ -20,7 +20,7 @@ int main() {
         std::cout<< "[Mode] Thread-per-image\n";
         std::vector<std::thread> threads;
 
-        for(const auto&path : imagesPath) {
+        for(const std::string&path : imagesPath) {
             threads.emplace_back(loadAndPushImage, path, std::ref(loadedImages));
         }
 
@@ -51,6 +51,7 @@ int main() {
     }
 
     int blockSize = 16;
+    int index = 0;
 
     for (const auto &img : loadedImages) {
         if (img.empty()) {
@@ -63,14 +64,17 @@ int main() {
             cv::Mat quantization = quantize(pixelated, 16);
             dither(quantization, 4);
 
-            cv::imshow("Quantized + Dithered Image", quantization);
-
-            int key = cv::waitKey(0);  
-            if (key == 27) cv::destroyAllWindows();  
+            std::string name = std::to_string(index++);
+            cv::imshow(name, quantization);
         }
         catch (const std::exception &e) {
             std::cerr << e.what() << '\n';
             return -1;
         }
     }
+
+    cv::waitKey(0);
+    cv::destroyAllWindows();
+
+    return 0;
 }
