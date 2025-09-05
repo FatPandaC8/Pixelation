@@ -1,0 +1,3 @@
+/home/superguts/PERSONAL PROJ/FUN/pixelate/build/CMakeFiles/pixelate_service.dir
+/home/superguts/PERSONAL PROJ/FUN/pixelate/build/CMakeFiles/edit_cache.dir
+/home/superguts/PERSONAL PROJ/FUN/pixelate/build/CMakeFiles/rebuild_cache.dir
